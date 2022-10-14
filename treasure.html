@@ -82,6 +82,7 @@
     <div class="col-sm-2"><img id="image25" onclick="check(24)" src="closed.jpg" alt="box"
         style="width: 110px;height:110px;"></div>
   </div>
+  <button onclick="resetGame()" class="btn btn-primary">game reset</button>
   <!-- <div class="container-fluid"> -->
   <!-- <h1>Responsive Columns</h1>
     <p>Resize the browser window to see the effect.</p>
@@ -109,7 +110,7 @@
       let lastCheck =12;
       var treasureLocation=Math.floor(Math.random()* 25)
       console.log(treasureLocation)
-        function resetGame() {
+      function resetGame() {
                 treasureLocation = Math.floor(Math.random() * 25)
                 while(treasureLocation == 12) {
                     treasureLocation = Math.floor(Math.random() * 25)
@@ -120,11 +121,10 @@
                 document.getElementById("score").innerHTML = "Score is unknown"
                 for(let i = 0; i < 25; i++) {
                     if(i != 12) {
-                        document.getElementById(ids[i]).src = "treasureicon.png"
+                        document.getElementById(ids[i]).src = "closed.jpg"
                     }
                 }
             }
-      
       function check(position){
         // console.log("Chest Clicked\nPosition: " + position + "	ID: " +ids[position])
         let chest_id = ids[position];
