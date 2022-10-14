@@ -104,65 +104,75 @@
     let ids = ["image1", "image2", "image3", "image4", "image5", "image6", "image7", "image8", "image9", "image10",
       "image11", "image12", "image13", "image14", "image15", "image16", "image17", "image18", "image19", "image20", "image21",
       "image22", "image23", "image24", "image25"]
-
-    let chestCount = 0;
-    let score = 0;
-    let lastCheck = 12;
-    let treasureLocation = 18;
-    function check(position) {
-      var imgId = ids[position];
-      if (position == treasureLocation) {
-        document.getElementById(imgId).src = "openchest.jpg";
-      }
-      else {
-        document.getElementById(imgId).src = "none.jpg";
-      }
-      chestCount = chestCount + 1;
-      score = score + 1;
-      document.getElementById("chests").innerHTML = "Number of chests checked is " + chestCount;
-      document.getElementById("score").innerHTML = "Score is " + score;
-      lastCheck = position;
-    }
-    function resetGame() {
+      let chestCount =0;
+      let score =0;
+      let lastCheck =12;
+      var treasureLocation=Math.floor(Math.random()* 25)
+      console.log(treasureLocation)
+        function resetGame() {
                 treasureLocation = Math.floor(Math.random() * 25)
                 while(treasureLocation == 12) {
                     treasureLocation = Math.floor(Math.random() * 25)
                 }
-    function help() {
-      let columnlast = lastCheck % 5;
-      let rowlast = Math.floor(lastCheck / 5);
-      let treasureColumn = treasureLocation % 5;
-      let treasureRow = Math.floor(treasureLocation / 5);
-      score = score + 2;
-      document.getElementById("score").innerHTML = "Score is " + score;
-      if (treasureRow == rowlast) {
-        if (columnlast < treasureColumn) {
-          document.getElementById("help").innerHTML = "right";
+                chestCount = 0
+                score = 0
+                document.getElementById("chests").innerHTML = "Number of chests checked is zero"
+                document.getElementById("score").innerHTML = "Score is unknown"
+                for(let i = 0; i < 25; i++) {
+                    if(i != 12) {
+                        document.getElementById(ids[i]).src = "treasureicon.png"
+                    }
+                }
+            }
+      
+      function check(position){
+        // console.log("Chest Clicked\nPosition: " + position + "	ID: " +ids[position])
+        let chest_id = ids[position];
+        if (position==treasureLocation){
+          document.getElementById(chest_id).src = "openchest.jpg"
+          score+=1;
+        }else{
+          document.getElementById(chest_id).src = "none.jpg"
         }
-        else if (columnlast > treasureColumn) {
-          document.getElementById("help").innerHTML = "left";
-        }
-        else {
-          document.getElementById("help").innerHTML = "Sorry, no help available";
-        }
+        score += 1;
+        chestCount+=1;
+        document.getElementById("chests").innerHTML = "Number of chests checked is "+chestCount;
+        document.getElementById("score").innerHTML = "Your score  is :: " +score;
+        lastCheck = position;
+        //just to make sure
+        console.log("Chest Count: "+chestCount + "\nScore: "+ score + "\nLast Checked: "+ lastCheck)
       }
-      else if (treasureColumn == columnlast) {
-        if (rowlast < treasureRow) {
-          document.getElementById("help").innerHTML = "down";
+      function help(){
+        let last_check_row = Math.floor(lastCheck/5);
+        let last_check_col = lastCheck%5;
+        let treasure_row = Math.floor(treasureLocation/5);
+        let treasure_col = treasureLocation%5;
+  
+        let doc = document.getElementById("help")
+        if(treasure_col == last_check_col && treasure_row == last_check_row){
+          doc.innerHTML = "You already won, NO help Available"
+        }else if(treasure_col == last_check_col){
+          score += 2;
+          if(treasure_row<last_check_row){
+            doc.innerHTML = "UP"
+          }
+          if(treasure_row>last_check_row){
+            doc.innerHTML = "DOWN"
+          }
+        }else if(treasure_row == last_check_row){
+          score += 2;
+          if(treasure_col < last_check_col){
+            doc.innerHTML = "Left"
+          }
+          if(treasure_col>last_check_col){
+            doc.innerHTML = "Right"
+          }
+        }else{
+          doc.innerHTML = "Sorry NO Help Available"
         }
-        else if (rowlast > treasureRow) {
-          document.getElementById("help").innerHTML = "up";
-        }
-        else {
-          document.getElementById("help").innerHTML = "Sorry, no help available";
-        }
+        document.getElementById("score").innerHTML = "Your score  is :: " +score;
       }
-      else {
-        document.getElementById("help").innerHTML = "Sorry, no help available";
-      }
-    }
-  </script>
-
+    </script>
+      
 </body>
-
 </html>
